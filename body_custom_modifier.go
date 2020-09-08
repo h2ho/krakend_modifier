@@ -48,6 +48,12 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 			}
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
+	} else if m.source == "body" {
+		for i := 0; i < len(m.target); i++ {
+				data.Set(m.keys[i], m.target[i])
+			}
+		}
+		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
 	// fix
 	// req.Header.Set("Content-Type", "plain/text")
