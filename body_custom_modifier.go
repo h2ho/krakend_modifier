@@ -36,10 +36,10 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 	data := url.Values{}
 	for k, vv := range req.PostForm {
-        for _, v := range vv {
-            data.Set(k, v)
-        }
-    }
+		for _, v := range vv {
+			data.Set(k, v)
+		}
+	}
 	query := req.URL.Query()
 	if m.source == "header" {
 		for i := 0; i < len(m.target); i++ {
@@ -55,15 +55,11 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	} else if m.source == "body" {
 		for i := 0; i < len(m.target); i++ {
-				data.Set(m.keys[i], m.target[i])
-			}
+			data.Set(m.keys[i], m.target[i])
+
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
-	// fix
-	// req.Header.Set("Content-Type", "plain/text")
-	// req.Body = ioutil.NopCloser(strings.NewReader(strings.Join(m.target, " ")))
-
 	return nil
 }
 
