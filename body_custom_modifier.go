@@ -9,7 +9,6 @@ import (
 
 	"github.com/google/martian"
 	"github.com/google/martian/parse"
-	"google.golang.org/appengine/log"
 )
 
 func init() {
@@ -36,7 +35,6 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	data := url.Values{}
-	log.Debugf("body.ModifyRequest: request: %s", req.URL)
 	if m.source == "header" {
 		for i := 1; i < len(m.target); i++ {
 			data.Set(m.keys[i], req.Header.Get(m.target[i]))
