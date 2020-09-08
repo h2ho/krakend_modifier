@@ -42,8 +42,7 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
-
-	if m.source == "query" {
+	else if m.source == "query" {
 		for i := 0; i < len(m.target); i++ {
 			if query.Get(m.target[i]) != "" {
 				data.Set(m.keys[i], query.Get(m.target[i]))
