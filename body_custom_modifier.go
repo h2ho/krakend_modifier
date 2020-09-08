@@ -35,6 +35,11 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	data := url.Values{}
+	for k, vv := range req.PostForm {
+        for _, v := range vv {
+            data.Set(k, v)
+        }
+    }
 	query := req.URL.Query()
 	if m.source == "header" {
 		for i := 0; i < len(m.target); i++ {
