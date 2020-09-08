@@ -3,12 +3,12 @@ package querystring
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
 
 	"github.com/google/martian"
+	"github.com/google/martian/log"
 	"github.com/google/martian/parse"
 )
 
@@ -34,12 +34,12 @@ type BodyModifierJSON struct {
 func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	log.Println(len(m.target))
+
 	data := url.Values{}
+	log.Debugf("body.ModifyRequest: request: %s", req.URL)
 	if m.source == "header" {
-		if i := 0; i < len(m.target) {
+		for i := 1; i < len(m.target); i++ {
 			data.Set(m.keys[i], req.Header.Get(m.target[i]))
-			i++
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
