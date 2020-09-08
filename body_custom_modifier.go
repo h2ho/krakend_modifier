@@ -49,7 +49,7 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
-
+	// fix
 	// req.Header.Set("Content-Type", "plain/text")
 	// req.Body = ioutil.NopCloser(strings.NewReader(strings.Join(m.target, " ")))
 
