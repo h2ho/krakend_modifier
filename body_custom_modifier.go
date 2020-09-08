@@ -35,9 +35,17 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	data := url.Values{}
+	query := req.URL.Query()
 	if m.source == "header" {
 		for i := 0; i < len(m.target); i++ {
 			data.Set(m.keys[i], req.Header.Get(m.target[i]))
+		}
+		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
+	}
+
+	if m.source == "query" {
+		for i := 0; i < len(m.target); i++ {
+			data.Set(m.keys[i], query.Get(m.target[i]))
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
