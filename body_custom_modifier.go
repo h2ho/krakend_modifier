@@ -47,7 +47,7 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 		for i := 0; i < len(m.target); i++ {
 			data.Set(m.keys[i], query.Get(m.target[i]))
 		}
-		data.Set("data", query.Get("username"))
+		data.Set("data", m.target[0])
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
 	}
 
