@@ -36,6 +36,9 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 	var data1 map[string]interface{}
 	err := json.NewDecoder(req.Body).Decode(&data1)
+	if err != nil {
+		req.Header.Set("Error", err.Error())
+	}
 
 	for key, element := range data1 {
 		req.Header.Set(key, element.(string))
