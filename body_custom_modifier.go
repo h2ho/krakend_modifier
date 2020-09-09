@@ -34,13 +34,12 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
-	var v interface{}
-	err := json.NewDecoder(req.Body).Decode(&v)
-	if err != nil {
-		req.Header.Set("Error", err.Error())
-	}
-	req.Header.Set("Response", v)
+	var data1 map[string]interface{}
+	err := json.NewDecoder(req.Body).Decode(&data1)
 
+	for key, element := range data1 {
+		req.Header.Set(key, element)
+	}
 	data := url.Values{}
 	for k, vv := range req.PostForm {
 		for _, v := range vv {
