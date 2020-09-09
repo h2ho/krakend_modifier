@@ -34,8 +34,9 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
+	req.ParseForm()
 	data := url.Values{}
-	for k, vv := range req.ParseForm {
+	for k, vv := range req.PostForm {
 		for _, v := range vv {
 			data.Set(k, v)
 		}
@@ -59,6 +60,8 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 		}
 		req.Body = ioutil.NopCloser(strings.NewReader(data.Encode()))
+	} else {
+
 	}
 	return nil
 }
