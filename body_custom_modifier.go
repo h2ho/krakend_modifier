@@ -36,7 +36,7 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
 	err := req.ParseForm()
 	if err != nil {
-		req.Header.Set("Error", err)
+		req.Header.Set("Error", err.Error())
 	}
 	data := url.Values{}
 	for k, vv := range req.PostForm {
