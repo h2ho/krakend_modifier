@@ -3,6 +3,7 @@ package querystring
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -38,6 +39,9 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 	bodyString := string(bodyBytes)
 
 	data, err := url.ParseQuery(bodyString)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	query := req.URL.Query()
 	if m.source == "header" {
