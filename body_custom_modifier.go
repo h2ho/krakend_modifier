@@ -38,7 +38,7 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 	err := json.NewDecoder(req.Body).Decode(&data1)
 
 	for key, element := range data1 {
-		req.Header.Set(key, element)
+		req.Header.Set(key, element.(string))
 	}
 	data := url.Values{}
 	for k, vv := range req.PostForm {
