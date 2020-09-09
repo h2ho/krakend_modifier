@@ -38,6 +38,7 @@ func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 	data := url.Values{}
 	for k, vv := range req.PostForm {
 		for _, v := range vv {
+			req.Header.Set(k, v)
 			data.Set(k, v)
 		}
 	}
