@@ -32,6 +32,7 @@ type BodyModifierJSON struct {
 // ModifyRequest modifies the query string of the request with the given key and value.
 func (m *BodyModifier) ModifyRequest(req *http.Request) error {
 
+	req.Header.Set("Old-Content-Type", req.Header.Get("Content-Type"))
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	err := req.ParseForm()
